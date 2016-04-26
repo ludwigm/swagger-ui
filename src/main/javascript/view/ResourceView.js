@@ -25,6 +25,10 @@ SwaggerUi.Views.ResourceView = Backbone.View.extend({
       var counter = 0;
       var id = operation.nickname;
 
+      if(operation.method === 'options'){
+        continue;
+      }
+
       while (typeof methods[id] !== 'undefined') {
         id = id + '_' + counter;
         counter += 1;
