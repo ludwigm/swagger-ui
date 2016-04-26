@@ -1,5 +1,32 @@
 # Swagger UI
 
+## Modifications
+
+This version is modified and allows for handle multiple Swagger definitions via a central config files. Additionally it is possible to pre-fill the API-Keys and OPTIONS requests are hidden.
+
+A config file looks like this:
+
+```
+{
+   "title": "APIs",
+   "selected" : "Charts DEV-Mock",
+   "files" : {
+      "Charts DEV-Mock": "/swagger_export_dev_mock.json",
+      "Charts DEV": "/swagger_export_dev.json",
+      "Charts PROD": "/swagger_export_prod.json",
+      "Charts PROD-Mock": "/swagger_export_prod_mock.json"
+   },
+   "apiKeys" : {
+      "Charts DEV": "FILLME",
+      "Charts DEV-Mock": "FILLME",
+      "Charts PROD": null,
+      "Charts PROD-Mock": "FILLME"
+   },
+   "apiKeyName": "api_key",
+   "apiKeyHeader": "x-api-key"
+ }
+```
+
 [![Build Status](https://travis-ci.org/swagger-api/swagger-ui.svg?branch=master)](https://travis-ci.org/swagger-api/swagger-ui)
 [![NPM version](https://badge.fury.io/js/swagger-ui.png)](http://badge.fury.io/js/swagger-ui)
 
