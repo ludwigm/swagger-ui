@@ -41,12 +41,14 @@
 
       $('#input_baseUrl').change(function() {
         var url = $(this).val();
-        auth = {}
-        auth[apiKeyName] = new SwaggerClient.ApiKeyAuthorization(apiKeyHeader, keys[url], "header")
+        var selected = _.invert(files)[url];
+        var selectedKey = keys[selected];
+        log("Selected: " + url + " Key: " + selectedKey)
         window.swaggerUi.updateSwaggerUi({
-          url: url,
-          authorizations: auth
+          url: url//,
+          //authorizations: auth
         });
+        window.swaggerUi.api.clientAuthorizations.authz[apiKeyName] = new SwaggerClient.ApiKeyAuthorization(apiKeyHeader, selectedKey, "header")
         selectedUrl = url;
         updateMultipleSpecs();
       });
@@ -67,9 +69,8 @@
       }
 
       function initSwagger(url, key){
-        console.log(key);
         auth = {};
-        auth[apiKeyName] = new SwaggerClient.ApiKeyAuthorization(apiKeyHeader, key, "header")
+        auth[apiKeyName] = new SwaggerClient.ApiKeyAuthorization(apiKeyHeader, key, "header");
         window.swaggerUi = new SwaggerUi({
           url: url,
           dom_id: "swagger-ui-container",
@@ -99,11 +100,12 @@
               $.extend(files, data.files)
               $.extend(keys, data.apiKeys)
               selectedUrl = data.selected;
+              selectedEntry = _.invert(files)[selectedUrl];
               apiKeyName = data.apiKeyName;
               apiKeyHeader = data.apiKeyHeader;
-              //var spec = data.files
-              console.log(selectedUrl)
-              initSwagger(files[selectedUrl], keys[selectedUrl])
+              selectedKey = keys[selectedEntry];
+              log("Selected: " + selectedUrl + " Key: " + selectedKey)
+              initSwagger(selectedUrl, selectedKey)
               window.swaggerUi.load();
               updateMultipleSpecs();
           }
@@ -119,6 +121,7 @@
             .html(key);
           sel.append(opt);
         });
+        sel.blur();
       }
   });
   </script>
